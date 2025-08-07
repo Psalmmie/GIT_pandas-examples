@@ -38,8 +38,8 @@ print('\n==================================================================\n')
 
 # Show avg ratings movie (groupby + avg)
 avgRatings = cloneDF(mergeRatings)
-avgRatings = avgRatings.groupby(['movie_id', 'title']).mean()
-print('Avg ratings: \n%s' % avgRatings['rating'][:10])
+avgRatings = avgRatings.groupby(['movie_id', 'title'])["rating"].mean()
+print('Avg ratings: \n%s' % avgRatings[:10])
 print('\n==================================================================\n')
 
 
@@ -62,5 +62,5 @@ print('\n==================================================================\n')
 # Sort data ratings by created field (groupby + lambda function + sorted)
 sortAda = cloneDF(mergeRatings)
 sortAda = sortAda.groupby(['movie_id', 'title'])['rating'].agg(
-    COUNT=np.size, myAVG=lambda x: x.sum() / float(x.count())).sort('COUNT', ascending=False)
+    COUNT=np.size, myAVG=lambda x: x.sum() / float(x.count())).sort_values('COUNT', ascending=False)
 print('My info sorted: \n%s' % sortAda[:15])
