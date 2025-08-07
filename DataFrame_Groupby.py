@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = 'Obadero_Samuel'
+__author__ = 'Who ?'
 
 import pandas as pd
 import numpy as np
@@ -60,7 +60,7 @@ print('\n==================================================================\n')
 
 
 # Sort data ratings by created field (groupby + lambda function + sorted)
-sort_Rating_Fields = cloneDF(mergeRatings)
-sort_Rating_Fields = sort_Rating_Fields.groupby(['movie_id', 'title'])['rating'].agg(
+sort_name = cloneDF(mergeRatings)
+sort_name = sort_name.groupby(['movie_id', 'title'])['rating'].agg(
     COUNT=np.size, myAVG=lambda x: x.sum() / float(x.count())).sort('COUNT', ascending=False)
-print('My info sorted: \n%s' % sort_Rating_Fields[:15])
+print('My info sorted: \n%s' % sort_name[:15])
