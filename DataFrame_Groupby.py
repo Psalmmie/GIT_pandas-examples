@@ -3,7 +3,11 @@ __author__ = 'Obadero_Samuel'
 
 import pandas as pd
 import numpy as np
-
+def to_numeric(s):
+    try:
+        return pd.to_numeric(s,errors='raise')
+    except ValueError:
+        return s
 # Load Data
 userHeader = ['user_id', 'gender', 'age', 'ocupation', 'zip']
 users = pd.read_csv('dataSet/users.txt', engine='python',
@@ -25,7 +29,7 @@ mergeRatings = pd.merge(pd.merge(users, ratings), movies)
 
 def cloneDF(df):
     a = pd.DataFrame(df.values.copy(), df.index.copy(), df.columns.copy())
-    return a.apply(pd.to_numeric, errors = 'ignore')
+    return a.apply(to_numeric)
 
 
 # Show Films with more votes. (groupby + sorted)
@@ -54,7 +58,7 @@ print('\n==================================================================\n')
 # Show data ratings movies, applying a function (groupby + lambda function)
 myAvg = cloneDF(mergeRatings)
 myAvg = myAvg.groupby(['movie_id', 'title'])['rating'].agg(
-    SUM=np.sum, COUNT=np.size, AVG=np.mean, myAVG=lambda x: x.sum() / float(x.count()))
+    SUM='sum', COUNT=np.size, AVG='mean', myAVG=lambda x: x.sum() / float(x.count()))
 print('My info ratings: \n%s' % myAvg[:10])
 print('\n==================================================================\n')
 
